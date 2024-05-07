@@ -50,6 +50,7 @@ public class main_interface extends javax.swing.JFrame {
         mainInterface = this;
         productHistoryLog_panel.setVisible(false);
         manage_profile.setVisible(false);
+        orderPanel.setVisible(false);
         add_user.setVisible(false);
         manage_user.setVisible(false);
         stock_control_panel.setVisible(false);
@@ -122,6 +123,7 @@ public class main_interface extends javax.swing.JFrame {
         orderTransactionButton = new javax.swing.JLabel();
         supplierButton = new javax.swing.JLabel();
         product_panel_frame = new javax.swing.JPanel();
+        orderPanel = new javax.swing.JPanel();
         supplierPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         supplierTable = new javax.swing.JTable();
@@ -499,6 +501,11 @@ public class main_interface extends javax.swing.JFrame {
         orderTransactionButton.setForeground(new java.awt.Color(0, 0, 0));
         orderTransactionButton.setText("Orders");
         orderTransactionButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        orderTransactionButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                orderTransactionButtonMouseClicked(evt);
+            }
+        });
         product_menu.add(orderTransactionButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 120, 30));
 
         supplierButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -516,6 +523,10 @@ public class main_interface extends javax.swing.JFrame {
 
         product_panel_frame.setBackground(new java.awt.Color(255, 255, 255));
         product_panel_frame.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        orderPanel.setBackground(new java.awt.Color(255, 255, 255));
+        orderPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        product_panel_frame.add(orderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 500));
 
         supplierPanel.setBackground(new java.awt.Color(255, 255, 255));
         supplierPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -2000,7 +2011,10 @@ public class main_interface extends javax.swing.JFrame {
         view_products.setFont(new Font("arial", Font.BOLD, 13));
         stockControlButton.setFont(new Font("arial", Font.PLAIN, 12));
         supplierButton.setFont(new Font("arial", Font.PLAIN, 12));
+        orderTransactionButton.setFont(new Font("arial", Font.PLAIN, 12));
+        
 
+        orderPanel.setVisible(false);
         view_product_panel.setVisible(true);
         stock_control_panel.setVisible(false);
         supplierPanel.setVisible(false);
@@ -2044,7 +2058,9 @@ public class main_interface extends javax.swing.JFrame {
         stockControlButton.setFont(new Font("arial", Font.BOLD, 13));
         view_products.setFont(new Font("arial", Font.PLAIN, 12));
         supplierButton.setFont(new Font("arial", Font.PLAIN, 12));
-
+        orderTransactionButton.setFont(new Font("arial", Font.PLAIN, 12));
+        
+        orderPanel.setVisible(false);
         stock_control_panel.setVisible(true);
         view_product_panel.setVisible(false);
         supplierPanel.setVisible(false);
@@ -2285,8 +2301,10 @@ public class main_interface extends javax.swing.JFrame {
         supplierButton.setFont(new Font("arial", Font.BOLD, 13));
         stockControlButton.setFont(new Font("arial", Font.PLAIN, 12));
         view_products.setFont(new Font("arial", Font.PLAIN, 12));
+        orderTransactionButton.setFont(new Font("arial", Font.PLAIN, 12));
 
         supplierPanel.setVisible(true);
+        orderPanel.setVisible(false);
         stock_control_panel.setVisible(false);
         view_product_panel.setVisible(false);
     }//GEN-LAST:event_supplierButtonMouseClicked
@@ -3223,6 +3241,19 @@ public class main_interface extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField2KeyPressed
 
+    private void orderTransactionButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTransactionButtonMouseClicked
+        // TODO add your handling code here:
+         orderTransactionButton.setFont(new Font("arial", Font.BOLD, 13));
+        stockControlButton.setFont(new Font("arial", Font.PLAIN, 12));
+        supplierButton.setFont(new Font("arial", Font.PLAIN, 12));
+        view_products.setFont(new Font("arial", Font.PLAIN, 12));
+        
+        orderPanel.setVisible(true);
+        supplierPanel.setVisible(false);
+        view_product_panel.setVisible(false);
+        stock_control_panel.setVisible(false);
+    }//GEN-LAST:event_orderTransactionButtonMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add_user;
     private javax.swing.JTextField address;
@@ -3313,6 +3344,7 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JPanel manage_user;
     private javax.swing.JTextField name;
     private javax.swing.JTextField nameField;
+    private javax.swing.JPanel orderPanel;
     private javax.swing.JLabel orderTransactionButton;
     private javax.swing.JTextField password;
     private javax.swing.JTextField passwordField;
