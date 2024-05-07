@@ -533,17 +533,14 @@ public class main_interface extends javax.swing.JFrame {
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "product", "qty", "price", "transaction", "payment", "date/time", "pre-order"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -551,6 +548,15 @@ public class main_interface extends javax.swing.JFrame {
             }
         });
         jScrollPane8.setViewportView(jTable4);
+        if (jTable4.getColumnModel().getColumnCount() > 0) {
+            jTable4.getColumnModel().getColumn(0).setResizable(false);
+            jTable4.getColumnModel().getColumn(1).setResizable(false);
+            jTable4.getColumnModel().getColumn(2).setResizable(false);
+            jTable4.getColumnModel().getColumn(3).setResizable(false);
+            jTable4.getColumnModel().getColumn(4).setResizable(false);
+            jTable4.getColumnModel().getColumn(5).setResizable(false);
+            jTable4.getColumnModel().getColumn(6).setResizable(false);
+        }
 
         orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 490, 480));
 
