@@ -124,6 +124,8 @@ public class main_interface extends javax.swing.JFrame {
         supplierButton = new javax.swing.JLabel();
         product_panel_frame = new javax.swing.JPanel();
         orderPanel = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable4 = new javax.swing.JTable();
         supplierPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         supplierTable = new javax.swing.JTable();
@@ -526,6 +528,32 @@ public class main_interface extends javax.swing.JFrame {
 
         orderPanel.setBackground(new java.awt.Color(255, 255, 255));
         orderPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane8.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        });
+        jScrollPane8.setViewportView(jTable4);
+
+        orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 490, 480));
+
         product_panel_frame.add(orderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 500));
 
         supplierPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -3328,9 +3356,11 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     public javax.swing.JTable jTable1;
     public javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
