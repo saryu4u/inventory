@@ -237,6 +237,8 @@ public class forgot_password extends javax.swing.JFrame {
             } else {
                 if (MyJDBC.forgotPassword(username, password)) {
                     JOptionPane.showMessageDialog(this, "Forgot password Successfully");
+                    logs = new  Logs(0, "FORGOT PASSWORD", username , null, null) ;
+                    MyJDBC.addLogsToDatabase(logs);
                     this.dispose();
                     new login_frame(user).setVisible(true);
                 } else {
