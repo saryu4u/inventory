@@ -637,6 +637,17 @@ public class main_interface extends javax.swing.JFrame {
                 quantityFieldActionPerformed(evt);
             }
         });
+        quantityField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                quantityFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                quantityFieldKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                quantityFieldKeyTyped(evt);
+            }
+        });
         supplierPanel.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 60, -1));
 
         descriptionFIeld.setBackground(new java.awt.Color(255, 255, 255));
@@ -655,6 +666,14 @@ public class main_interface extends javax.swing.JFrame {
         itemPriceField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemPriceFieldActionPerformed(evt);
+            }
+        });
+        itemPriceField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                itemPriceFieldKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                itemPriceFieldKeyTyped(evt);
             }
         });
         supplierPanel.add(itemPriceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 100, -1));
@@ -717,15 +736,30 @@ public class main_interface extends javax.swing.JFrame {
 
         stock_control_panel.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 480, 450));
 
+        categoyField.setBackground(new java.awt.Color(255, 255, 255));
         categoyField.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "CATEGORY", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 102))); // NOI18N
         stock_control_panel.add(categoyField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, 170, -1));
 
+        descField.setBackground(new java.awt.Color(255, 255, 255));
         descField.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "DESCRIPTION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 102))); // NOI18N
         stock_control_panel.add(descField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 170, 120));
 
+        qtyField.setBackground(new java.awt.Color(255, 255, 255));
         qtyField.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "QTY", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 102))); // NOI18N
+        qtyField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                qtyFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                qtyFieldKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                qtyFieldKeyTyped(evt);
+            }
+        });
         stock_control_panel.add(qtyField, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 100, 50, -1));
 
+        itemNameField.setBackground(new java.awt.Color(255, 255, 255));
         itemNameField.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "PRODUCT NAME", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 102))); // NOI18N
         stock_control_panel.add(itemNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 170, -1));
 
@@ -749,7 +783,13 @@ public class main_interface extends javax.swing.JFrame {
         });
         stock_control_panel.add(updateStockButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 150, -1));
 
+        priceField.setBackground(new java.awt.Color(255, 255, 255));
         priceField.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "PRICE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 102))); // NOI18N
+        priceField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                priceFieldKeyPressed(evt);
+            }
+        });
         stock_control_panel.add(priceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 110, -1));
 
         jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -2046,7 +2086,6 @@ public class main_interface extends javax.swing.JFrame {
         stockControlButton.setFont(new Font("arial", Font.PLAIN, 12));
         supplierButton.setFont(new Font("arial", Font.PLAIN, 12));
         orderTransactionButton.setFont(new Font("arial", Font.PLAIN, 12));
-        
 
         orderPanel.setVisible(false);
         view_product_panel.setVisible(true);
@@ -2093,7 +2132,7 @@ public class main_interface extends javax.swing.JFrame {
         view_products.setFont(new Font("arial", Font.PLAIN, 12));
         supplierButton.setFont(new Font("arial", Font.PLAIN, 12));
         orderTransactionButton.setFont(new Font("arial", Font.PLAIN, 12));
-        
+
         orderPanel.setVisible(false);
         stock_control_panel.setVisible(true);
         view_product_panel.setVisible(false);
@@ -2180,6 +2219,7 @@ public class main_interface extends javax.swing.JFrame {
                 } else if (desc.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Please Fill Out the Description", "WARNING", JOptionPane.ERROR_MESSAGE);
                 } else {
+
                     String userid = tblModel1.getValueAt(stockControlTable.getSelectedRow(), 0).toString();
                     int i = Integer.parseInt(userid);
 
@@ -2363,9 +2403,6 @@ public class main_interface extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         DefaultTableModel tblModel1 = (DefaultTableModel) supplierTable.getModel();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdf.format(jDateChooser1);
 
         if (tblModel1.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "WALANG LAMAN LODS");
@@ -3277,16 +3314,105 @@ public class main_interface extends javax.swing.JFrame {
 
     private void orderTransactionButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTransactionButtonMouseClicked
         // TODO add your handling code here:
-         orderTransactionButton.setFont(new Font("arial", Font.BOLD, 13));
+        orderTransactionButton.setFont(new Font("arial", Font.BOLD, 13));
         stockControlButton.setFont(new Font("arial", Font.PLAIN, 12));
         supplierButton.setFont(new Font("arial", Font.PLAIN, 12));
         view_products.setFont(new Font("arial", Font.PLAIN, 12));
-        
+
         orderPanel.setVisible(true);
         supplierPanel.setVisible(false);
         view_product_panel.setVisible(false);
         stock_control_panel.setVisible(false);
     }//GEN-LAST:event_orderTransactionButtonMouseClicked
+
+    private void itemPriceFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemPriceFieldKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9' || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
+            itemPriceField.setEditable(true);
+        } else {
+            itemPriceField.setEditable(false);
+        }
+
+    }//GEN-LAST:event_itemPriceFieldKeyPressed
+
+    private void itemPriceFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemPriceFieldKeyTyped
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_itemPriceFieldKeyTyped
+
+    private void quantityFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityFieldKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9' || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
+            quantityField.setEditable(true);
+        } else {
+            quantityField.setEditable(false);
+        }
+    }//GEN-LAST:event_quantityFieldKeyPressed
+
+    private void quantityFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityFieldKeyTyped
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_quantityFieldKeyTyped
+
+    private void priceFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_priceFieldKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9' || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
+            priceField.setEditable(true);
+        } else {
+            priceField.setEditable(false);
+        }
+    }//GEN-LAST:event_priceFieldKeyPressed
+
+    private void qtyFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtyFieldKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9' || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
+            qtyField.setEditable(true);
+        } else {
+            qtyField.setEditable(false);
+        }
+    }//GEN-LAST:event_qtyFieldKeyPressed
+
+    private void qtyFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtyFieldKeyTyped
+        // TODO add your handling code here:
+//        if (qtyField.getText().length() != 0) {
+//            if (Integer.parseInt(qtyField.getText()) <= 100 || qtyField.getText().length() <=3) {
+//                qtyField.setEditable(true);
+//            }else if (Integer.parseInt(qtyField.getText()) > 100 || qtyField.getText().length() >= 4) {
+//                qtyField.setEditable(false);
+//                updateStockButton.setEnabled(false);
+//                
+//            }  
+//        }
+    }//GEN-LAST:event_qtyFieldKeyTyped
+
+    private void qtyFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtyFieldKeyReleased
+        // TODO add your handling code here:
+        try {
+            int value = Integer.parseInt(qtyField.getText());
+            if (value > 100) {
+                updateStockButton.setEnabled(false);
+            } else {
+                updateStockButton.setEnabled(true);
+            }
+        } catch (NumberFormatException ex) {
+            // Handle non-integer input
+            updateStockButton.setEnabled(true);
+        }
+    }//GEN-LAST:event_qtyFieldKeyReleased
+
+    private void quantityFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityFieldKeyReleased
+        // TODO add your handling code here:
+        try {
+            int value = Integer.parseInt(quantityField.getText());
+            if (value >= 100) {
+                jButton7.setEnabled(false);
+            } else {
+                jButton7.setEnabled(true);
+            }
+        } catch (NumberFormatException ex) {
+            jButton7.setEnabled(true);
+        }
+    }//GEN-LAST:event_quantityFieldKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add_user;
