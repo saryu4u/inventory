@@ -210,7 +210,6 @@ public class login_frame extends javax.swing.JFrame {
     public static int lives = 3;
     private void login_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_button1ActionPerformed
         // TODO add your handling code here:
-
         String username = username_field.getText();
         String password = String.valueOf(password_field.getPassword());
 
@@ -235,7 +234,6 @@ public class login_frame extends javax.swing.JFrame {
                 if (lives < 1) {
                     int response = JOptionPane.showConfirmDialog(this, "You Have Reached the Maximum Attempt! Please Change Your Password", "Log in Warning", JOptionPane.YES_NO_OPTION);
                     if (response == JOptionPane.YES_OPTION) {
-
                         this.dispose();
                         new forgot_password(user).setVisible(true);
                     }
@@ -388,7 +386,6 @@ public class login_frame extends javax.swing.JFrame {
                         }
                     }
                 }
-
             }
         }
     }//GEN-LAST:event_username_fieldKeyPressed

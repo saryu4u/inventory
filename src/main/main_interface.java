@@ -1003,7 +1003,7 @@ public class main_interface extends javax.swing.JFrame {
         });
         productHistoryLog_panel.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, 30));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "all", "action", "product", " " }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "all", "action" }));
         productHistoryLog_panel.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 80, 30));
 
         history_panel_frame.add(productHistoryLog_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 500));
@@ -1551,7 +1551,6 @@ public class main_interface extends javax.swing.JFrame {
         history_panel.setVisible(false);
 
         reporting_panel.setVisible(false);
-
         settingsButton.setBackground(Color.white);
 
         customerButton.setBackground(new Color(0xCCCCCC));
@@ -1559,8 +1558,6 @@ public class main_interface extends javax.swing.JFrame {
         homeButton.setBackground(new Color(0xCCCCCC));
         productButton.setBackground(new Color(0xCCCCCC));
         historyButton.setBackground(new Color(0xCCCCCC));
-
-
     }//GEN-LAST:event_settingsButtonMouseClicked
 
     private void settingsButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsButtonMouseEntered
@@ -1749,9 +1746,6 @@ public class main_interface extends javax.swing.JFrame {
         manageProfile.setFont(new Font("arial", Font.PLAIN, 12));
         manageUserButton2.setFont(new Font("arial", Font.PLAIN, 12));
 
-//         viewUsers.setForeground(new Color(0x))
-//        manageProfile.setFont(new Font("arial", Font.PLAIN, 12));
-//        manageUserButton2.setFont(new Font("arial", Font.PLAIN, 12));
         add_user.setVisible(false);
         manage_profile.setVisible(false);
         manage_user.setVisible(true);
@@ -2187,7 +2181,6 @@ public class main_interface extends javax.swing.JFrame {
         qtyField.setText(qty);
         categoyField.setText(category);
         descField.setText(desc);
-
     }//GEN-LAST:event_stockControlTableMouseClicked
 
     private void updateStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateStockButtonActionPerformed
@@ -2243,7 +2236,6 @@ public class main_interface extends javax.swing.JFrame {
 
                     if (MyJDBC.addLogsToDatabase(logs)) {
                         preparedStatement.executeUpdate();
-
                         itemNameField.setText("");
                         priceField.setText("");
                         qtyField.setText("");
@@ -2251,7 +2243,6 @@ public class main_interface extends javax.swing.JFrame {
                         descField.setText("");
                         JOptionPane.showMessageDialog(this, "Update Successfully");
                     }
-
                 }
 
             } else {
@@ -2270,7 +2261,6 @@ public class main_interface extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-
         DefaultTableModel tblModel1 = (DefaultTableModel) stockControlTable.getModel();
 
         try {
@@ -2846,7 +2836,44 @@ public class main_interface extends javax.swing.JFrame {
             jPanel3.repaint();
             jPanel3.revalidate();
 
-        } else if (jComboBox2.getSelectedItem().equals("action")) {
+        } else if (jComboBox2.getSelectedItem().equals("product")) {
+            pastLogs1.clear();
+            jPanel3.removeAll();
+            pastLogs1 = MyJDBC.getLogsUserSearchAction(user, jTextField3.getText().toUpperCase(), user.getId());
+
+            for (int i = pastLogs1.size() - 1; i > 0; i--) {
+
+                Logs pastLog = pastLogs1.get(i);
+
+                JPanel container = new JPanel();
+
+                container.setLayout(new BorderLayout());
+                container.setBorder(BorderFactory.createEtchedBorder());
+
+                JLabel actions = new JLabel(pastLog.getActions());
+                actions.setForeground(new Color(0x000066));
+                actions.setFont(new Font("Arial", Font.BOLD, 15));
+
+                JLabel byWho = new JLabel(pastLog.getModifiedBy());
+                byWho.setForeground(new Color(0x000066));
+                byWho.setFont(new Font("Arial", Font.BOLD, 15));
+
+                JLabel timeLabel = new JLabel(pastLog.getLogsDate().toString() + "  |  " + pastLog.getLogsTime().toString());
+                timeLabel.setForeground(new Color(0x000066));
+                timeLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+
+                container.add(byWho, BorderLayout.EAST);
+                container.add(actions, BorderLayout.CENTER);
+                container.add(timeLabel, BorderLayout.SOUTH);
+
+                container.setBackground(Color.WHITE);
+
+                jPanel3.add(container);
+
+            }
+
+            jPanel3.repaint();
+            jPanel3.revalidate();
         }
 
     }//GEN-LAST:event_jTextField3KeyPressed
