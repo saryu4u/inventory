@@ -126,6 +126,10 @@ public class main_interface extends javax.swing.JFrame {
         orderPanel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
         supplierPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         supplierTable = new javax.swing.JTable();
@@ -536,7 +540,7 @@ public class main_interface extends javax.swing.JFrame {
 
             },
             new String [] {
-                "product", "qty", "price", "transaction", "payment", "date/time", "pre-order"
+                "id", "product", "qty", "price", "transaction", "payment", "order date", "pre-order","status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -548,17 +552,32 @@ public class main_interface extends javax.swing.JFrame {
             }
         });
         jScrollPane8.setViewportView(jTable4);
-        if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(0).setResizable(false);
-            jTable4.getColumnModel().getColumn(1).setResizable(false);
-            jTable4.getColumnModel().getColumn(2).setResizable(false);
-            jTable4.getColumnModel().getColumn(3).setResizable(false);
-            jTable4.getColumnModel().getColumn(4).setResizable(false);
-            jTable4.getColumnModel().getColumn(5).setResizable(false);
-            jTable4.getColumnModel().getColumn(6).setResizable(false);
-        }
 
         orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 490, 480));
+
+        jButton11.setBackground(new java.awt.Color(0, 0, 102));
+        jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton11.setForeground(new java.awt.Color(255, 255, 255));
+        jButton11.setText("CANCEL ORDER");
+        orderPanel.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 170, 30));
+
+        jButton12.setBackground(new java.awt.Color(0, 0, 102));
+        jButton12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton12.setForeground(new java.awt.Color(255, 255, 255));
+        jButton12.setText("PAY NOW");
+        orderPanel.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 170, 30));
+
+        jButton13.setBackground(new java.awt.Color(0, 0, 102));
+        jButton13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton13.setForeground(new java.awt.Color(255, 255, 255));
+        jButton13.setText("EDIT");
+        orderPanel.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 170, 30));
+
+        jButton14.setBackground(new java.awt.Color(0, 0, 102));
+        jButton14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton14.setForeground(new java.awt.Color(255, 255, 255));
+        jButton14.setText("SAVE");
+        orderPanel.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 170, 30));
 
         product_panel_frame.add(orderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 500));
 
@@ -3464,6 +3483,10 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JTextField itemPriceField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
