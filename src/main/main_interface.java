@@ -2197,7 +2197,7 @@ public class main_interface extends javax.swing.JFrame {
         String qty = qtyField.getText();
         String category = categoyField.getText();
         String desc = descField.getText();
-        int qty1 = Integer.parseInt(qty);
+        //int qty1 = Integer.parseInt(qty);
 
         DefaultTableModel tblModel1 = (DefaultTableModel) stockControlTable.getModel();
 
@@ -3374,26 +3374,19 @@ public class main_interface extends javax.swing.JFrame {
 
     private void qtyFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtyFieldKeyTyped
         // TODO add your handling code here:
-//        if (qtyField.getText().length() != 0) {
-//            if (Integer.parseInt(qtyField.getText()) <= 100 || qtyField.getText().length() <=3) {
-//                qtyField.setEditable(true);
-//            }else if (Integer.parseInt(qtyField.getText()) > 100 || qtyField.getText().length() >= 4) {
-//                qtyField.setEditable(false);
-//                updateStockButton.setEnabled(false);
-//                
-//            }  
-//        }
     }//GEN-LAST:event_qtyFieldKeyTyped
 
     private void qtyFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtyFieldKeyReleased
         // TODO add your handling code here:
+        
+        
         try {
-            int value = Integer.parseInt(qtyField.getText());
-            if (value > 100) {
-                updateStockButton.setEnabled(false);
-            } else {
-                updateStockButton.setEnabled(true);
-            }
+                int value = Integer.parseInt(qtyField.getText());
+                if (value > 100) {
+                    updateStockButton.setEnabled(false);
+                } else {
+                    updateStockButton.setEnabled(true);
+                }
         } catch (NumberFormatException ex) {
             // Handle non-integer input
             updateStockButton.setEnabled(true);
