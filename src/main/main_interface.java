@@ -128,8 +128,6 @@ public class main_interface extends javax.swing.JFrame {
         jTable4 = new javax.swing.JTable();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         supplierPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         supplierTable = new javax.swing.JTable();
@@ -138,12 +136,16 @@ public class main_interface extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         quantityField = new javax.swing.JTextField();
-        descriptionFIeld = new javax.swing.JTextField();
         itemPriceField = new javax.swing.JTextField();
         itemField = new javax.swing.JTextField();
         categoryField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jComboBox6 = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel23 = new javax.swing.JLabel();
         stock_control_panel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         stockControlTable = new javax.swing.JTable();
@@ -540,44 +542,49 @@ public class main_interface extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "product", "qty", "price", "transaction", "payment", "order date", "pre-order","status"
+                "item", "price", "qty", "category", "descripton", "payment type", "transaction", "pre-order", "total price", "status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
+                return canEdit [columnIndex];
             }
         });
         jScrollPane8.setViewportView(jTable4);
+        if (jTable4.getColumnModel().getColumnCount() > 0) {
+            jTable4.getColumnModel().getColumn(0).setResizable(false);
+            jTable4.getColumnModel().getColumn(1).setResizable(false);
+            jTable4.getColumnModel().getColumn(2).setResizable(false);
+            jTable4.getColumnModel().getColumn(3).setResizable(false);
+            jTable4.getColumnModel().getColumn(4).setResizable(false);
+            jTable4.getColumnModel().getColumn(5).setResizable(false);
+            jTable4.getColumnModel().getColumn(6).setResizable(false);
+            jTable4.getColumnModel().getColumn(7).setResizable(false);
+            jTable4.getColumnModel().getColumn(8).setResizable(false);
+            jTable4.getColumnModel().getColumn(9).setResizable(false);
+        }
 
-        orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 490, 480));
+        orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 670, 440));
 
         jButton11.setBackground(new java.awt.Color(0, 0, 102));
         jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
         jButton11.setText("CANCEL ORDER");
-        orderPanel.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 170, 30));
+        orderPanel.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 460, 130, 30));
 
         jButton12.setBackground(new java.awt.Color(0, 0, 102));
         jButton12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton12.setForeground(new java.awt.Color(255, 255, 255));
         jButton12.setText("PAY NOW");
-        orderPanel.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 170, 30));
-
-        jButton13.setBackground(new java.awt.Color(0, 0, 102));
-        jButton13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton13.setForeground(new java.awt.Color(255, 255, 255));
-        jButton13.setText("EDIT");
-        orderPanel.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 170, 30));
-
-        jButton14.setBackground(new java.awt.Color(0, 0, 102));
-        jButton14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton14.setForeground(new java.awt.Color(255, 255, 255));
-        jButton14.setText("SAVE");
-        orderPanel.add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 170, 30));
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        orderPanel.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 460, 130, 30));
 
         product_panel_frame.add(orderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 500));
 
@@ -591,11 +598,11 @@ public class main_interface extends javax.swing.JFrame {
 
             },
             new String [] {
-                "product", "price", "qty", "category", "description"
+                "product", "price", "qty", "category", "payment", "transaction", "pre-order", "total price", "status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -609,13 +616,17 @@ public class main_interface extends javax.swing.JFrame {
             supplierTable.getColumnModel().getColumn(2).setResizable(false);
             supplierTable.getColumnModel().getColumn(3).setResizable(false);
             supplierTable.getColumnModel().getColumn(4).setResizable(false);
+            supplierTable.getColumnModel().getColumn(5).setResizable(false);
+            supplierTable.getColumnModel().getColumn(6).setResizable(false);
+            supplierTable.getColumnModel().getColumn(7).setResizable(false);
+            supplierTable.getColumnModel().getColumn(8).setResizable(false);
         }
 
         supplierPanel.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 500));
 
         jButton6.setBackground(new java.awt.Color(0, 0, 102));
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("SAVE");
+        jButton6.setText("ORDER");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -669,16 +680,6 @@ public class main_interface extends javax.swing.JFrame {
         });
         supplierPanel.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 60, -1));
 
-        descriptionFIeld.setBackground(new java.awt.Color(255, 255, 255));
-        descriptionFIeld.setForeground(new java.awt.Color(0, 0, 102));
-        descriptionFIeld.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 102), null), "DESCRIPTION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 102))); // NOI18N
-        descriptionFIeld.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                descriptionFIeldActionPerformed(evt);
-            }
-        });
-        supplierPanel.add(descriptionFIeld, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 160, 130));
-
         itemPriceField.setBackground(new java.awt.Color(255, 255, 255));
         itemPriceField.setForeground(new java.awt.Color(0, 0, 102));
         itemPriceField.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 102), null), "PRICE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(0, 0, 102))); // NOI18N
@@ -722,6 +723,19 @@ public class main_interface extends javax.swing.JFrame {
 
         jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
         supplierPanel.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 160, 30));
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CARD", "CASH" }));
+        supplierPanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 140, 70, 20));
+
+        jLabel21.setText("Pre-Order: ");
+        supplierPanel.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 270, -1, -1));
+
+        jLabel22.setText("pay later:");
+        supplierPanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 90, 20));
+        supplierPanel.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 170, 20, -1));
+
+        jLabel23.setText("payment type:");
+        supplierPanel.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 90, 20));
 
         product_panel_frame.add(supplierPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 500));
 
@@ -2338,13 +2352,21 @@ public class main_interface extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        String status = "paid";
         String item = itemField.getText();
         String price = itemPriceField.getText();
         String qty = quantityField.getText();
         String category = categoryField.getText();
-        String desc = descriptionFIeld.getText();
+        String paymentMethod = jComboBox6.getSelectedItem().toString();
+        String date = sdf.format(jDateChooser1.getDate());
+        String tPrice = String.valueOf(Double.parseDouble(price)*Double.parseDouble(qty));
+        if(jCheckBox1.isSelected()){
+            status = "not paid";
+        }
+        
 
-        if (item.isEmpty() && price.isEmpty() && qty.isEmpty() && category.isEmpty() && desc.isEmpty()) {
+        if (item.isEmpty() && price.isEmpty() && qty.isEmpty() && category.isEmpty() ) {
             JOptionPane.showMessageDialog(this, "Please fill all the info to add item", "WARNING", JOptionPane.ERROR_MESSAGE);
         } else if (item.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter Item Name", "WARNING", JOptionPane.ERROR_MESSAGE);
@@ -2354,11 +2376,9 @@ public class main_interface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter Quantity", "WARNING", JOptionPane.ERROR_MESSAGE);
         } else if (category.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter Item Category", "WARNING", JOptionPane.ERROR_MESSAGE);
-        } else if (desc.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a Description", "WARNING", JOptionPane.ERROR_MESSAGE);
         } else {
 
-            String data[] = {item, price, qty, category, desc};
+            String data[] = {item, price, qty, category,paymentMethod,"import",date,tPrice, status};
 
             DefaultTableModel tblModel1 = (DefaultTableModel) supplierTable.getModel();
 
@@ -2367,7 +2387,8 @@ public class main_interface extends javax.swing.JFrame {
             itemPriceField.setText("");
             quantityField.setText("");
             categoryField.setText("");
-            descriptionFIeld.setText("");
+            jDateChooser1.cleanup();
+            
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -2392,10 +2413,6 @@ public class main_interface extends javax.swing.JFrame {
         view_product_panel.setVisible(false);
     }//GEN-LAST:event_supplierButtonMouseClicked
 
-    private void descriptionFIeldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descriptionFIeldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_descriptionFIeldActionPerformed
-
     private void itemPriceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPriceFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_itemPriceFieldActionPerformed
@@ -2412,53 +2429,40 @@ public class main_interface extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         DefaultTableModel tblModel1 = (DefaultTableModel) supplierTable.getModel();
+        DefaultTableModel tblModel2 = (DefaultTableModel) jTable4.getModel();
 
         if (tblModel1.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "WALANG LAMAN LODS");
         } else {
-            try {
-                Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
-                for (int i = 0; i < tblModel1.getRowCount(); i++) {
+            //add this motherfucker to the order panel table
+            for (int i = 0; i < tblModel1.getRowCount(); i++) {
 
-                    String item = tblModel1.getValueAt(i, 0).toString();
-                    String price = tblModel1.getValueAt(i, 1).toString();
-                    String qty = tblModel1.getValueAt(i, 2).toString();
-                    String category = tblModel1.getValueAt(i, 3).toString();
-                    String desc = tblModel1.getValueAt(i, 4).toString();
-                    int qty1 = Integer.parseInt(qty);
-                    //InputStream in = new FileInputStream("C:\Users\gilbert\Downloads\settings.png");  
+                String item = tblModel1.getValueAt(i, 0).toString();
+                String price = tblModel1.getValueAt(i, 1).toString();
+                String qty = tblModel1.getValueAt(i, 2).toString();
+                String category = tblModel1.getValueAt(i, 3).toString();
+                String date = tblModel1.getValueAt(i, 4).toString();
+                
+                int qty1 = Integer.parseInt(qty);
+                //InputStream in = new FileInputStream("C:\Users\gilbert\Downloads\settings.png");  
 
-                    PreparedStatement preparedStatement = connection.prepareStatement(
-                            "INSERT into stocks(product_name, product_price, category, quantity, description)"
-                            + "VALUES(?,?,?,?,?)");
-                    preparedStatement.setString(1, item);
-                    preparedStatement.setString(2, price);
-                    preparedStatement.setString(3, category);
-                    preparedStatement.setString(4, qty);
-                    preparedStatement.setString(5, desc);
+                logs = new Logs(user.getId(), "ORDERED " + item + " ITEM", user.getName(), null, null);
 
-                    //InputStream hehe = new FileInputStream("C:\Users\gilbert\Downloads\settings.png");
-                    // preparedStatement.setBlob(6, hehe);
-                    logs = new Logs(user.getId(), "ADDED NEW ITEM", user.getName(), null, null);
+                if (MyJDBC.addLogsToDatabase(logs)) {
+                    String data[] = {item, price, qty, "none" ,category, null, "import", null};
 
-                    if (MyJDBC.addLogsToDatabase(logs)) {
-                        preparedStatement.executeUpdate();
-                        JOptionPane.showMessageDialog(this, "ITEM ADDED SUCCESSFULLY");
-                    }
-
+                    tblModel2.addRow(data);
+                    JOptionPane.showMessageDialog(this, "ITEM ORDER SUCCESSFULLY CREATED");
                 }
-                itemField.setText("");
-                itemPriceField.setText("");
-                quantityField.setText("");
-                categoryField.setText("");
-                descriptionFIeld.setText("");
 
-                tblModel1.setRowCount(0);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+            itemField.setText("");
+            itemPriceField.setText("");
+            quantityField.setText("");
+            categoryField.setText("");
+            
+            tblModel1.setRowCount(0);
 
         }
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -3424,15 +3428,14 @@ public class main_interface extends javax.swing.JFrame {
 
     private void qtyFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtyFieldKeyReleased
         // TODO add your handling code here:
-        
-        
+
         try {
-                int value = Integer.parseInt(qtyField.getText());
-                if (value > 100) {
-                    updateStockButton.setEnabled(false);
-                } else {
-                    updateStockButton.setEnabled(true);
-                }
+            int value = Integer.parseInt(qtyField.getText());
+            if (value > 100) {
+                updateStockButton.setEnabled(false);
+            } else {
+                updateStockButton.setEnabled(true);
+            }
         } catch (NumberFormatException ex) {
             // Handle non-integer input
             updateStockButton.setEnabled(true);
@@ -3453,6 +3456,10 @@ public class main_interface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_quantityFieldKeyReleased
 
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add_user;
     private javax.swing.JTextField address;
@@ -3468,7 +3475,6 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JPanel customers_panel;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField descField;
-    private javax.swing.JTextField descriptionFIeld;
     private javax.swing.JTextField email;
     private javax.swing.JTextField emailField;
     private javax.swing.JPanel header;
@@ -3485,8 +3491,6 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -3495,11 +3499,13 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
@@ -3513,6 +3519,9 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
