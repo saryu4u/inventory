@@ -142,7 +142,6 @@ public class main_interface extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jComboBox6 = new javax.swing.JComboBox<>();
-        jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel23 = new javax.swing.JLabel();
@@ -537,6 +536,7 @@ public class main_interface extends javax.swing.JFrame {
 
         jScrollPane8.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        jTable4.setBackground(new java.awt.Color(255, 255, 255));
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -567,7 +567,7 @@ public class main_interface extends javax.swing.JFrame {
             jTable4.getColumnModel().getColumn(9).setResizable(false);
         }
 
-        orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 670, 440));
+        orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 450));
 
         jButton11.setBackground(new java.awt.Color(0, 0, 102));
         jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -591,7 +591,7 @@ public class main_interface extends javax.swing.JFrame {
         supplierPanel.setBackground(new java.awt.Color(255, 255, 255));
         supplierPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        supplierTable.setBackground(new java.awt.Color(0, 0, 102));
+        supplierTable.setBackground(new java.awt.Color(255, 255, 255));
         supplierTable.setForeground(new java.awt.Color(255, 255, 255));
         supplierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -719,16 +719,13 @@ public class main_interface extends javax.swing.JFrame {
         supplierPanel.add(categoryField, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 160, -1));
 
         jLabel17.setText("Pre-Order: ");
-        supplierPanel.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 270, -1, -1));
+        supplierPanel.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
 
         jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
-        supplierPanel.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 160, 30));
+        supplierPanel.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 70, 20));
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CARD", "CASH" }));
         supplierPanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 140, 70, 20));
-
-        jLabel21.setText("Pre-Order: ");
-        supplierPanel.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 270, -1, -1));
 
         jLabel22.setText("pay later:");
         supplierPanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 90, 20));
@@ -2442,7 +2439,10 @@ public class main_interface extends javax.swing.JFrame {
                 String price = tblModel1.getValueAt(i, 1).toString();
                 String qty = tblModel1.getValueAt(i, 2).toString();
                 String category = tblModel1.getValueAt(i, 3).toString();
-                String date = tblModel1.getValueAt(i, 4).toString();
+                String payment = tblModel1.getValueAt(i, 4).toString();
+                String preOrderDate = tblModel1.getValueAt(i, 6).toString();
+                String tprice = tblModel1.getValueAt(i, 7).toString();
+                String status = tblModel1.getValueAt(i, 8).toString();
                 
                 int qty1 = Integer.parseInt(qty);
                 //InputStream in = new FileInputStream("C:\Users\gilbert\Downloads\settings.png");  
@@ -2450,7 +2450,7 @@ public class main_interface extends javax.swing.JFrame {
                 logs = new Logs(user.getId(), "ORDERED " + item + " ITEM", user.getName(), null, null);
 
                 if (MyJDBC.addLogsToDatabase(logs)) {
-                    String data[] = {item, price, qty, "none" ,category, null, "import", null};
+                    String data[] = {item, price, qty,category  ,"none", payment, "import", preOrderDate,tprice,status};
 
                     tblModel2.addRow(data);
                     JOptionPane.showMessageDialog(this, "ITEM ORDER SUCCESSFULLY CREATED");
@@ -3519,7 +3519,6 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel25;
