@@ -19,8 +19,13 @@ import javax.swing.table.DefaultTableModel;
 import db_objs.Logs;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.*;
@@ -592,7 +597,7 @@ public class main_interface extends javax.swing.JFrame {
         supplierPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         supplierTable.setBackground(new java.awt.Color(255, 255, 255));
-        supplierTable.setForeground(new java.awt.Color(255, 255, 255));
+        supplierTable.setForeground(new java.awt.Color(0, 0, 102));
         supplierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -722,7 +727,17 @@ public class main_interface extends javax.swing.JFrame {
         supplierPanel.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
 
         jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
-        supplierPanel.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 70, 20));
+        supplierPanel.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 160, 30));
+        LocalDate today = LocalDate.now();
+        String date12 = String.valueOf(today);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date date = dateFormat.parse(date12);
+            jDateChooser1.setMinSelectableDate(date);
+        } catch (ParseException e) {
+            System.out.println("Error parsing date: " + e.getMessage());
+        }
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CARD", "CASH" }));
         supplierPanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 140, 70, 20));
@@ -2346,24 +2361,37 @@ public class main_interface extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    String date;
+    String tPrice;
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here: 
+
         SimpleDateFormat sdf = new SimpleDateFormat();
-        String status = "paid";
+        String status = "PAID";
         String item = itemField.getText();
         String price = itemPriceField.getText();
         String qty = quantityField.getText();
         String category = categoryField.getText();
+
         String paymentMethod = jComboBox6.getSelectedItem().toString();
-        String date = sdf.format(jDateChooser1.getDate());
-        String tPrice = String.valueOf(Double.parseDouble(price)*Double.parseDouble(qty));
-        if(jCheckBox1.isSelected()){
+        try {
+            date = sdf.format(jDateChooser1.getDate());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Please enter Pre-Order Date", "WARNING", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!price.isEmpty() && !qty.isEmpty()) {
+            tPrice = String.valueOf(Double.parseDouble(price) * Double.parseDouble(qty));
+        } else {
+
+        }
+
+        if (jCheckBox1.isSelected()) {
             status = "not paid";
         }
-        
 
-        if (item.isEmpty() && price.isEmpty() && qty.isEmpty() && category.isEmpty() ) {
+        if (item.isEmpty() && price.isEmpty() && qty.isEmpty() && category.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill all the info to add item", "WARNING", JOptionPane.ERROR_MESSAGE);
         } else if (item.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter Item Name", "WARNING", JOptionPane.ERROR_MESSAGE);
@@ -2375,7 +2403,7 @@ public class main_interface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter Item Category", "WARNING", JOptionPane.ERROR_MESSAGE);
         } else {
 
-            String data[] = {item, price, qty, category,paymentMethod,"import",date,tPrice, status};
+            String data[] = {item, price, qty, category, paymentMethod, "IMPORT", date, tPrice, status};
 
             DefaultTableModel tblModel1 = (DefaultTableModel) supplierTable.getModel();
 
@@ -2384,8 +2412,7 @@ public class main_interface extends javax.swing.JFrame {
             itemPriceField.setText("");
             quantityField.setText("");
             categoryField.setText("");
-            jDateChooser1.cleanup();
-            
+
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -2443,14 +2470,16 @@ public class main_interface extends javax.swing.JFrame {
                 String preOrderDate = tblModel1.getValueAt(i, 6).toString();
                 String tprice = tblModel1.getValueAt(i, 7).toString();
                 String status = tblModel1.getValueAt(i, 8).toString();
-                
+
                 int qty1 = Integer.parseInt(qty);
                 //InputStream in = new FileInputStream("C:\Users\gilbert\Downloads\settings.png");  
 
                 logs = new Logs(user.getId(), "ORDERED " + item + " ITEM", user.getName(), null, null);
 
-                if (MyJDBC.addLogsToDatabase(logs)) {
-                    String data[] = {item, price, qty,category  ,"none", payment, "import", preOrderDate,tprice,status};
+                transaction = new Transaction(user.getId(), "IMPORT", item, new BigDecimal(price), qty1, "SUPPLIER", new BigDecimal(tprice), payment, status, preOrderDate, category, "NONE", null);
+
+                if (MyJDBC.addLogsToDatabase(logs) && MyJDBC.addTransactionToDatabase(transaction)) {
+                    String data[] = {item, price, qty, category, "NONE", payment, "IMPORT", preOrderDate, tprice, status};
 
                     tblModel2.addRow(data);
                     JOptionPane.showMessageDialog(this, "ITEM ORDER SUCCESSFULLY CREATED");
@@ -2461,7 +2490,7 @@ public class main_interface extends javax.swing.JFrame {
             itemPriceField.setText("");
             quantityField.setText("");
             categoryField.setText("");
-            
+
             tblModel1.setRowCount(0);
 
         }
@@ -3373,6 +3402,83 @@ public class main_interface extends javax.swing.JFrame {
         supplierPanel.setVisible(false);
         view_product_panel.setVisible(false);
         stock_control_panel.setVisible(false);
+
+        if (user.getStatus().equalsIgnoreCase("admin")) {
+            DefaultTableModel tblModel2 = (DefaultTableModel) jTable4.getModel();
+            tblModel2.setRowCount(0);
+            try {
+                Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM transaction");
+                
+                
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    String item = resultSet.getString("product_name");
+                    String price = String.valueOf(resultSet.getBigDecimal("product_price"));
+                    String qty = String.valueOf(resultSet.getInt("product_quantity"));
+                    String category = resultSet.getString("category");
+                    String desc = resultSet.getString("description");
+                    String transactionType = resultSet.getString("transaction_type");
+                    String payment = resultSet.getString("payment_method");
+                    String preOrderDate = resultSet.getString("pre_order_date");
+                    String tprice = String.valueOf(resultSet.getBigDecimal("total_price"));
+                    String status = resultSet.getString("status");
+                    String qty1 = String.valueOf(qty);
+
+                    String data1[] = {item, price, qty, category, desc, payment, transactionType, preOrderDate, tprice, status};
+
+                    DefaultTableModel tblModel1 = (DefaultTableModel) jTable4.getModel();
+
+                    tblModel1.addRow(data1);
+                }
+                resultSet.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            DefaultTableModel tblModel2 = (DefaultTableModel) jTable4.getModel();
+            tblModel2.setRowCount(0);
+            try {
+                Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM transaction WHERE user_id=?");
+                
+                preparedStatement.setInt(1, user.getId());
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    String item = resultSet.getString("product_name");
+                    String price = String.valueOf(resultSet.getBigDecimal("product_price"));
+                    String qty = String.valueOf(resultSet.getInt("product_quantity"));
+                    String category = resultSet.getString("category");
+                    String desc = resultSet.getString("description");
+                    String transactionType = resultSet.getString("transaction_type");
+                    String payment = resultSet.getString("payment_method");
+                    String preOrderDate = resultSet.getString("pre_order_date");
+                    String tprice = String.valueOf(resultSet.getBigDecimal("total_price"));
+                    String status = resultSet.getString("status");
+                    String qty1 = String.valueOf(qty);
+
+                    String data1[] = {item, price, qty, category, desc, payment, transactionType, preOrderDate, tprice, status};
+
+                    DefaultTableModel tblModel1 = (DefaultTableModel) jTable4.getModel();
+
+                    tblModel1.addRow(data1);
+                }
+                resultSet.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }//GEN-LAST:event_orderTransactionButtonMouseClicked
 
     private void itemPriceFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemPriceFieldKeyPressed
