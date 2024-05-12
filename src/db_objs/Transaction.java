@@ -14,10 +14,12 @@ public class Transaction {
     private final String productName;
     private final Date transactionDate;
     private final String seller;
-    private final Time time;
+    private final BigDecimal totalPrice;
+    private final String paymentMethod, status, preOrder, category, desc;
+    
     //private final BigDecimal transactionSale;
 
-    public Transaction(int userId, String transactionType, String productName, BigDecimal productPrice, int productQuantity, String seller, Date transactionDate, Time time) {
+    public Transaction(int userId, String transactionType, String productName, BigDecimal productPrice, int productQuantity, String seller, BigDecimal totalPrice,String paymentMethod,String status,String preOrder,String category, String desc, Date transactionDate) {
         this.userId = userId;
         this.productQuantity = productQuantity;
         this.transactionType = transactionType;
@@ -25,12 +27,31 @@ public class Transaction {
         this.productName = productName;
         this.transactionDate = transactionDate;
         this.seller = seller;
-        this.time = time;
-
+        this.totalPrice = totalPrice;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.preOrder = preOrder;
+        this.category = category;
+        this.desc = desc;
     }
-
-    public Time getTime() {
-        return time;
+    public String getCategory(){
+        return category;
+    }
+    public String getDesc(){
+        return desc;
+    }
+    
+    public BigDecimal getTotalPrice(){
+        return totalPrice;
+    }
+    public String getPreOrderDate(){
+        return preOrder;
+    }
+    public String getPaymentMethod(){
+        return paymentMethod;
+    }
+    public String getStatus(){
+        return status;
     }
 
     public int getUserId() {
