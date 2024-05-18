@@ -561,6 +561,11 @@ public class main_interface extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable4MouseClicked(evt);
+            }
+        });
         jScrollPane8.setViewportView(jTable4);
 
         orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 450));
@@ -2385,7 +2390,7 @@ public class main_interface extends javax.swing.JFrame {
         }
 
         if (jCheckBox1.isSelected()) {
-            status = "not paid";
+            status = "NOT PAID";
         }
 
         if (item.isEmpty() && price.isEmpty() && qty.isEmpty() && category.isEmpty()) {
@@ -2476,10 +2481,10 @@ public class main_interface extends javax.swing.JFrame {
                 transaction = new Transaction(user.getId(), "IMPORT", item, new BigDecimal(price), qty1, "SUPPLIER", new BigDecimal(tprice), payment, status, preOrderDate, category, "NONE", "TO RECEIVE", null);
 
                 if (MyJDBC.addLogsToDatabase(logs) && MyJDBC.addTransactionToDatabase(transaction)) {
-                    String data[] = {item, price, qty, category, "NONE", payment, "IMPORT", preOrderDate, tprice, status, "TO RECEIVE"};
+                    String data[] = {item, price, qty, category, "NONE", payment, "IMPORT", preOrderDate, tprice, "TO RECEIVE", status};
 
                     tblModel2.addRow(data);
-                   
+
                 }
 
             }
@@ -3648,41 +3653,95 @@ public class main_interface extends javax.swing.JFrame {
             jButton7.setEnabled(true);
         }
     }//GEN-LAST:event_quantityFieldKeyReleased
-
+    String status123;
     private void payNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payNowButtonActionPerformed
         // TODO add your handling code here:
 
         DefaultTableModel tblModel3 = (DefaultTableModel) jTable4.getModel();
 
-        
-//            String hehe1 = tblModel3.getValueAt(i, 9).toString();
-//            String item = tblModel3.getValueAt(i, 0).toString();
-            try {
-                Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+        String item123 = tblModel3.getValueAt(jTable4.getSelectedRow(), 0).toString();
 
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            if  (jTable4.getSelectedRowCount() == 1) {
                 PreparedStatement preparedStatement = connection.prepareStatement(
-                        "UPDATE transaction SET  delivery = ? WHERE product_name = ?");
+                        "UPDATE transaction SET  status = ? WHERE (product_name LIKE ?)");
                 preparedStatement.setString(1, "PAID");
-               // preparedStatement.setString(2,);
-                
-                logs = new Logs(user.getId(), "PAY for ", user.getName(), null, null);
-                
-                 if (MyJDBC.addLogsToDatabase(logs)) {
-                     preparedStatement.executeUpdate();
-                     JOptionPane.showMessageDialog(this, "pay item SUCCESSFULLY");
-                 }
-                
+                preparedStatement.setString(2, item123);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                logs = new Logs(user.getId(), "PAY for ", user.getName(), null, null);
+
+                if (MyJDBC.addLogsToDatabase(logs)) {
+                    preparedStatement.executeUpdate();
+                    JOptionPane.showMessageDialog(this, "pay item SUCCESSFULLY");
+                }
+            } else {
+                if (jTable4.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(this, "Table is empty");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select a row");
+                }
             }
-        
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        tblModel3.setRowCount(0);
+
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM transaction"
+            );
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String item = resultSet.getString("product_name");
+                String price = String.valueOf(resultSet.getBigDecimal("product_price"));
+                String qty = String.valueOf(resultSet.getInt("product_quantity"));
+                String category = resultSet.getString("category");
+                String desc = resultSet.getString("description");
+                String transactionType = resultSet.getString("transaction_type");
+                String payment = resultSet.getString("payment_method");
+                String preOrderDate = resultSet.getString("pre_order_date");
+                String tprice = String.valueOf(resultSet.getBigDecimal("total_price"));
+                String status = resultSet.getString("status");
+                String delivery = resultSet.getString("delivery");
+
+                String data1[] = {item, price, qty, category, desc, payment, transactionType, preOrderDate, tprice, status, delivery};
+
+                DefaultTableModel tblModel1 = (DefaultTableModel) jTable4.getModel();
+
+                tblModel1.addRow(data1);
+            }
+            resultSet.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+//            JOptionPane.showMessageDialog(this, "HAHA isa isa lang");
 
     }//GEN-LAST:event_payNowButtonActionPerformed
 
     private void cancelOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelOrderButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelOrderButtonActionPerformed
+
+    private void jTable4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable4MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tblModel3 = (DefaultTableModel) jTable4.getModel();
+
+        status123 = tblModel3.getValueAt(jTable4.getSelectedRow(), 9).toString();
+        if (status123.equals("PAID")) {
+            payNowButton.setEnabled(false);
+        } else {
+            payNowButton.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_jTable4MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add_user;
