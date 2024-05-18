@@ -15,11 +15,11 @@ public class Transaction {
     private final Date transactionDate;
     private final String seller;
     private final BigDecimal totalPrice;
-    private final String paymentMethod, status, preOrder, category, desc;
+    private final String paymentMethod, status, preOrder, category, desc, delivery;
     
     //private final BigDecimal transactionSale;
 
-    public Transaction(int userId, String transactionType, String productName, BigDecimal productPrice, int productQuantity, String seller, BigDecimal totalPrice,String paymentMethod,String status,String preOrder,String category, String desc, Date transactionDate) {
+    public Transaction(int userId, String transactionType, String productName, BigDecimal productPrice, int productQuantity, String seller, BigDecimal totalPrice,String paymentMethod,String status,String preOrder,String category, String desc, String delivery,Date transactionDate) {
         this.userId = userId;
         this.productQuantity = productQuantity;
         this.transactionType = transactionType;
@@ -33,7 +33,12 @@ public class Transaction {
         this.preOrder = preOrder;
         this.category = category;
         this.desc = desc;
+        this.delivery = delivery;
     }
+    public String getDelivery(){
+        return delivery;
+    }
+    
     public String getCategory(){
         return category;
     }

@@ -161,8 +161,8 @@ public class MyJDBC {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
             PreparedStatement insertTransaction = connection.prepareStatement(
-                    "INSERT transaction(user_id, product_name, product_price, product_quantity, transaction_type, seller, total_price,payment_method,status,pre_order_date,category,description,date)"
-                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,NOW())");
+                    "INSERT transaction(user_id, product_name, product_price, product_quantity, transaction_type, seller, total_price,payment_method,status,pre_order_date,category,description,delivery,date)"
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())");
 
             insertTransaction.setInt(1, transaction.getUserId());
             insertTransaction.setString(2, transaction.getProductName());
@@ -176,6 +176,7 @@ public class MyJDBC {
             insertTransaction.setString(10, transaction.getPreOrderDate());
             insertTransaction.setString(11, transaction.getCategory());
             insertTransaction.setString(12, transaction.getDesc());
+            insertTransaction.setString(13, transaction.getDelivery());
             
             insertTransaction.executeUpdate();
             return true;
