@@ -46,12 +46,15 @@ public class main_interface extends javax.swing.JFrame {
     private static final String DB_PASSWORD = "saryuisagod1123";
     public static ArrayList<Logs> pastLogs = new ArrayList<>();
     public static ArrayList<Logs> pastLogs1 = new ArrayList<>();
+    Date currentDate;
+    Date targetDate;
 
     public main_interface(User user) {
 
         this.user = user;
 
         initComponents();
+
         mainInterface = this;
         productHistoryLog_panel.setVisible(false);
         manage_profile.setVisible(false);
@@ -131,8 +134,8 @@ public class main_interface extends javax.swing.JFrame {
         orderPanel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        cancelOrderButton = new javax.swing.JButton();
+        payNowButton = new javax.swing.JButton();
         supplierPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         supplierTable = new javax.swing.JTable();
@@ -547,11 +550,11 @@ public class main_interface extends javax.swing.JFrame {
 
             },
             new String [] {
-                "item", "price", "qty", "category", "descripton", "payment type", "transaction", "pre-order", "total price", "status"
+                "item", "price", "qty", "category", "descripton", "payment type", "transaction", "pre-order", "total price", "delivery", "status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -559,37 +562,30 @@ public class main_interface extends javax.swing.JFrame {
             }
         });
         jScrollPane8.setViewportView(jTable4);
-        if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(0).setResizable(false);
-            jTable4.getColumnModel().getColumn(1).setResizable(false);
-            jTable4.getColumnModel().getColumn(2).setResizable(false);
-            jTable4.getColumnModel().getColumn(3).setResizable(false);
-            jTable4.getColumnModel().getColumn(4).setResizable(false);
-            jTable4.getColumnModel().getColumn(5).setResizable(false);
-            jTable4.getColumnModel().getColumn(6).setResizable(false);
-            jTable4.getColumnModel().getColumn(7).setResizable(false);
-            jTable4.getColumnModel().getColumn(8).setResizable(false);
-            jTable4.getColumnModel().getColumn(9).setResizable(false);
-        }
 
         orderPanel.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 450));
 
-        jButton11.setBackground(new java.awt.Color(0, 0, 102));
-        jButton11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("CANCEL ORDER");
-        orderPanel.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 460, 130, 30));
-
-        jButton12.setBackground(new java.awt.Color(0, 0, 102));
-        jButton12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("PAY NOW");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        cancelOrderButton.setBackground(new java.awt.Color(0, 0, 102));
+        cancelOrderButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cancelOrderButton.setForeground(new java.awt.Color(255, 255, 255));
+        cancelOrderButton.setText("CANCEL ORDER");
+        cancelOrderButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                cancelOrderButtonActionPerformed(evt);
             }
         });
-        orderPanel.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 460, 130, 30));
+        orderPanel.add(cancelOrderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 460, 130, 30));
+
+        payNowButton.setBackground(new java.awt.Color(0, 0, 102));
+        payNowButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        payNowButton.setForeground(new java.awt.Color(255, 255, 255));
+        payNowButton.setText("PAY NOW");
+        payNowButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payNowButtonActionPerformed(evt);
+            }
+        });
+        orderPanel.add(payNowButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 460, 130, 30));
 
         product_panel_frame.add(orderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 500));
 
@@ -729,7 +725,8 @@ public class main_interface extends javax.swing.JFrame {
         jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
         supplierPanel.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 160, 30));
         LocalDate today = LocalDate.now();
-        String date12 = String.valueOf(today);
+        LocalDate today1 = today.plusDays(1);
+        String date12 = String.valueOf(today1);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
@@ -2366,7 +2363,7 @@ public class main_interface extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here: 
 
-        SimpleDateFormat sdf = new SimpleDateFormat();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String status = "PAID";
         String item = itemField.getText();
         String price = itemPriceField.getText();
@@ -2476,16 +2473,17 @@ public class main_interface extends javax.swing.JFrame {
 
                 logs = new Logs(user.getId(), "ORDERED " + item + " ITEM", user.getName(), null, null);
 
-                transaction = new Transaction(user.getId(), "IMPORT", item, new BigDecimal(price), qty1, "SUPPLIER", new BigDecimal(tprice), payment, status, preOrderDate, category, "NONE", null);
+                transaction = new Transaction(user.getId(), "IMPORT", item, new BigDecimal(price), qty1, "SUPPLIER", new BigDecimal(tprice), payment, status, preOrderDate, category, "NONE", "TO RECEIVE", null);
 
                 if (MyJDBC.addLogsToDatabase(logs) && MyJDBC.addTransactionToDatabase(transaction)) {
-                    String data[] = {item, price, qty, category, "NONE", payment, "IMPORT", preOrderDate, tprice, status};
+                    String data[] = {item, price, qty, category, "NONE", payment, "IMPORT", preOrderDate, tprice, status, "TO RECEIVE"};
 
                     tblModel2.addRow(data);
-                    JOptionPane.showMessageDialog(this, "ITEM ORDER SUCCESSFULLY CREATED");
+                   
                 }
 
             }
+            JOptionPane.showMessageDialog(this, "ITEM ORDER SUCCESSFULLY CREATED");
             itemField.setText("");
             itemPriceField.setText("");
             quantityField.setText("");
@@ -3403,6 +3401,95 @@ public class main_interface extends javax.swing.JFrame {
         view_product_panel.setVisible(false);
         stock_control_panel.setVisible(false);
 
+        DefaultTableModel tblModel3 = (DefaultTableModel) jTable4.getModel();
+
+        for (int i = 0; i < tblModel3.getRowCount(); i++) {
+
+            String preOrderDate = tblModel3.getValueAt(i, 7).toString();
+            String hehe1 = tblModel3.getValueAt(i, 9).toString();
+            LocalDate today = LocalDate.now();
+            String status123 = tblModel3.getValueAt(i, 10).toString();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            String dateNow = today.toString();
+
+            System.out.println(dateNow);
+
+            //String preOrderDate1 = sdf.format(preOrderDate);
+            System.out.println(preOrderDate);
+
+            try {
+                currentDate = sdf.parse(dateNow);
+                targetDate = sdf.parse(preOrderDate);
+
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+                e.printStackTrace(); // Optional for debugging
+            }
+            //16-05-2024         
+            if (currentDate.before(targetDate)) {
+                System.out.println("Date 1 is before Date 2.");
+            } else if (currentDate.after(targetDate) && status123.equals("TO RECEIVE") && hehe1.equals("PAID")) {
+                //
+                System.out.println("after the date");
+                DefaultTableModel tblModel1 = (DefaultTableModel) jTable4.getModel();
+
+                if (tblModel1.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(this, "WALANG LAMAN LODS");
+                } else {
+                    try {
+                        Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
+                        for (int v = 0; v < tblModel1.getRowCount(); v++) {
+                            String item = tblModel1.getValueAt(v, 0).toString();
+                            String price = tblModel1.getValueAt(v, 1).toString();
+                            String qty = tblModel1.getValueAt(v, 2).toString();
+                            String category = tblModel1.getValueAt(v, 3).toString();
+                            String desc = tblModel1.getValueAt(v, 4).toString();
+
+                            PreparedStatement preparedStatement = connection.prepareStatement(
+                                    "INSERT into stocks(product_name, product_price, category, quantity, description)"
+                                    + "VALUES(?,?,?,?,?)");
+                            preparedStatement.setString(1, item);
+                            preparedStatement.setString(2, price);
+                            preparedStatement.setString(3, category);
+                            preparedStatement.setString(4, qty);
+                            preparedStatement.setString(5, desc);
+
+                            PreparedStatement preparedStatement1 = connection.prepareStatement(
+                                    "UPDATE transaction SET delivery = ? WHERE  product_name = ?"
+                            );
+                            preparedStatement1.setString(1, "ITEM RECIEVED");
+                            preparedStatement1.setString(2, item);
+
+                            logs = new Logs(user.getId(), "Order item " + item + "' arrived", user.getName(), null, null);
+
+                            if (MyJDBC.addLogsToDatabase(logs)) {
+                                preparedStatement.executeUpdate();
+                                preparedStatement1.executeUpdate();
+                                JOptionPane.showMessageDialog(this, "Received item SUCCESSFULLY");
+                            } else {
+                                JOptionPane.showMessageDialog(this, "tanga");
+                            }
+
+                        }
+
+                        tblModel1.setRowCount(0);
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } else {
+
+            }
+
+            System.out.println(dateNow + "burat");
+
+        }
+
         if (user.getStatus().equalsIgnoreCase("admin")) {
             DefaultTableModel tblModel2 = (DefaultTableModel) jTable4.getModel();
             tblModel2.setRowCount(0);
@@ -3411,8 +3498,7 @@ public class main_interface extends javax.swing.JFrame {
 
                 PreparedStatement preparedStatement = connection.prepareStatement(
                         "SELECT * FROM transaction");
-                
-                
+
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
@@ -3426,9 +3512,10 @@ public class main_interface extends javax.swing.JFrame {
                     String preOrderDate = resultSet.getString("pre_order_date");
                     String tprice = String.valueOf(resultSet.getBigDecimal("total_price"));
                     String status = resultSet.getString("status");
+                    String delivery = resultSet.getString("delivery");
                     String qty1 = String.valueOf(qty);
 
-                    String data1[] = {item, price, qty, category, desc, payment, transactionType, preOrderDate, tprice, status};
+                    String data1[] = {item, price, qty, category, desc, payment, transactionType, preOrderDate, tprice, status, delivery};
 
                     DefaultTableModel tblModel1 = (DefaultTableModel) jTable4.getModel();
 
@@ -3439,7 +3526,7 @@ public class main_interface extends javax.swing.JFrame {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             DefaultTableModel tblModel2 = (DefaultTableModel) jTable4.getModel();
             tblModel2.setRowCount(0);
             try {
@@ -3447,7 +3534,7 @@ public class main_interface extends javax.swing.JFrame {
 
                 PreparedStatement preparedStatement = connection.prepareStatement(
                         "SELECT * FROM transaction WHERE user_id=?");
-                
+
                 preparedStatement.setInt(1, user.getId());
 
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -3562,9 +3649,40 @@ public class main_interface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_quantityFieldKeyReleased
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void payNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payNowButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
+
+        DefaultTableModel tblModel3 = (DefaultTableModel) jTable4.getModel();
+
+        
+//            String hehe1 = tblModel3.getValueAt(i, 9).toString();
+//            String item = tblModel3.getValueAt(i, 0).toString();
+            try {
+                Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "UPDATE transaction SET  delivery = ? WHERE product_name = ?");
+                preparedStatement.setString(1, "PAID");
+               // preparedStatement.setString(2,);
+                
+                logs = new Logs(user.getId(), "PAY for ", user.getName(), null, null);
+                
+                 if (MyJDBC.addLogsToDatabase(logs)) {
+                     preparedStatement.executeUpdate();
+                     JOptionPane.showMessageDialog(this, "pay item SUCCESSFULLY");
+                 }
+                
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        
+
+    }//GEN-LAST:event_payNowButtonActionPerformed
+
+    private void cancelOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelOrderButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelOrderButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add_user;
@@ -3573,6 +3691,7 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JLabel adminAuditLog;
     private javax.swing.JPanel auditLog_panel;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton cancelOrderButton;
     private javax.swing.JTextField categoryField;
     private javax.swing.JTextField categoyField;
     private javax.swing.JLabel customerButton;
@@ -3595,8 +3714,6 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JTextField itemPriceField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -3667,6 +3784,7 @@ public class main_interface extends javax.swing.JFrame {
     private javax.swing.JLabel orderTransactionButton;
     private javax.swing.JTextField password;
     private javax.swing.JTextField passwordField;
+    private javax.swing.JButton payNowButton;
     private javax.swing.JTextField priceField;
     private javax.swing.JLabel productButton;
     private javax.swing.JPanel productHistoryLog_panel;
