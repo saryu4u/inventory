@@ -2481,7 +2481,7 @@ public class main_interface extends javax.swing.JFrame {
                 transaction = new Transaction(user.getId(), "IMPORT", item, new BigDecimal(price), qty1, "SUPPLIER", new BigDecimal(tprice), payment, status, preOrderDate, category, "NONE", "TO RECEIVE", null);
 
                 if (MyJDBC.addLogsToDatabase(logs) && MyJDBC.addTransactionToDatabase(transaction)) {
-                    String data[] = {item, price, qty, category, "NONE", payment, "IMPORT", preOrderDate, tprice, "TO RECEIVE", status};
+                    String data[] = {item, price, qty, category, "NONE", payment, "IMPORT", preOrderDate, tprice, status, "TO RECEIVE"};
 
                     tblModel2.addRow(data);
 
@@ -3395,7 +3395,7 @@ public class main_interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2KeyPressed
 
     private void orderTransactionButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTransactionButtonMouseClicked
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         orderTransactionButton.setFont(new Font("arial", Font.BOLD, 13));
         stockControlButton.setFont(new Font("arial", Font.PLAIN, 12));
         supplierButton.setFont(new Font("arial", Font.PLAIN, 12));
@@ -3420,6 +3420,7 @@ public class main_interface extends javax.swing.JFrame {
             String dateNow = today.toString();
 
             System.out.println(dateNow);
+             System.out.println(status123);
 
             //String preOrderDate1 = sdf.format(preOrderDate);
             System.out.println(preOrderDate);
@@ -3435,9 +3436,10 @@ public class main_interface extends javax.swing.JFrame {
             //16-05-2024         
             if (currentDate.before(targetDate)) {
                 System.out.println("Date 1 is before Date 2.");
-            } else if (currentDate.after(targetDate) && status123.equals("TO RECEIVE") && hehe1.equals("PAID")) {
+            } else if (currentDate.after(targetDate) && hehe1.equals("PAID") && status123.equals("TO RECEIVE")) {
                 //
                 System.out.println("after the date");
+               
                 DefaultTableModel tblModel1 = (DefaultTableModel) jTable4.getModel();
 
                 if (tblModel1.getRowCount() == 0) {
@@ -3463,17 +3465,19 @@ public class main_interface extends javax.swing.JFrame {
                             preparedStatement.setString(5, desc);
 
                             PreparedStatement preparedStatement1 = connection.prepareStatement(
-                                    "UPDATE transaction SET delivery = ? WHERE  product_name = ?"
+                                    "UPDATE transaction SET delivery = ? WHERE  product_name = ? AND delivery = ? AND status = ?"
                             );
                             preparedStatement1.setString(1, "ITEM RECIEVED");
                             preparedStatement1.setString(2, item);
-
+                            preparedStatement1.setString(3, "TO RECEIVE");
+                            preparedStatement1.setString(4, "PAID");
+                            
                             logs = new Logs(user.getId(), "Order item " + item + "' arrived", user.getName(), null, null);
 
                             if (MyJDBC.addLogsToDatabase(logs)) {
                                 preparedStatement.executeUpdate();
                                 preparedStatement1.executeUpdate();
-                                JOptionPane.showMessageDialog(this, "Received item SUCCESSFULLY");
+                                JOptionPane.showMessageDialog(this, "Received item SUCCESSFULLY: " + item);
                             } else {
                                 JOptionPane.showMessageDialog(this, "tanga");
                             }
@@ -3663,7 +3667,7 @@ public class main_interface extends javax.swing.JFrame {
 
         try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-            if  (jTable4.getSelectedRowCount() == 1) {
+            if (jTable4.getSelectedRowCount() == 1) {
                 PreparedStatement preparedStatement = connection.prepareStatement(
                         "UPDATE transaction SET  status = ? WHERE (product_name LIKE ?)");
                 preparedStatement.setString(1, "PAID");
